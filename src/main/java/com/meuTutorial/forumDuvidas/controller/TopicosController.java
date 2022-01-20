@@ -8,12 +8,14 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.meuTutorial.forumDuvidas.controller.dto.DetalhesDoTopicoDto;
 import com.meuTutorial.forumDuvidas.controller.dto.TopicoDto;
 import com.meuTutorial.forumDuvidas.controller.form.TopicoForm;
 import com.meuTutorial.forumDuvidas.modelo.Topico;
@@ -29,6 +31,7 @@ public class TopicosController {
 	@Autowired
 	private CursoRepository cursoRepository;
 	
+		// Lista de todos os topicos
 	@GetMapping
 	public List<TopicoDto> lista(String nomeCurso) {
 		if (nomeCurso == null) {
@@ -40,6 +43,7 @@ public class TopicosController {
 		}
 	}
 
+	// Metodo para postar um topico
 	@PostMapping
 	public ResponseEntity<TopicoDto> cadastrar(@RequestBody  @Valid  TopicoForm form, UriComponentsBuilder uriBuilder) {
 		Topico topico = form.converter(cursoRepository);
@@ -48,5 +52,14 @@ public class TopicosController {
 		URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
 		return ResponseEntity.created(uri).body(new TopicoDto(topico));
 	}
+
+	// Metodo para obter dado de 1 topico especifico
+	@GetMapping("/{id}")
+    public DetalhesDoTopicoDto detalhar(@PathVariable Long id) {
+       Topico topico = topicoRepository.getById(id);        
+        return new DetalhesDoTopicoDto(topico);
+    }
+	
+
 
 }
