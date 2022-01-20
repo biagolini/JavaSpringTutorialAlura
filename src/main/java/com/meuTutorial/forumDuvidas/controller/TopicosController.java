@@ -2,6 +2,7 @@ package com.meuTutorial.forumDuvidas.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -60,25 +61,39 @@ public class TopicosController {
 
 	// Metodo para obter dado de 1 topico especifico
 	@GetMapping("/{id}")
-    public DetalhesDoTopicoDto detalhar(@PathVariable Long id) {
-       Topico topico = topicoRepository.getById(id);        
-        return new DetalhesDoTopicoDto(topico);
+    public ResponseEntity<DetalhesDoTopicoDto> detalhar(@PathVariable Long id) {
+       Optional <Topico> topico = topicoRepository.findById(id);   // Metodo para em caso de o id não ser encontrado retornarmos o STATUS 404
+	   if (topico.isPresent()) {     
+		return ResponseEntity.ok(new DetalhesDoTopicoDto(topico.get()));
+		}
+	   return ResponseEntity.notFound().build();
     }
 	
 	// Metodo para atualizar dados
 	@PutMapping("/{id}")
 	@Transactional
 	public ResponseEntity<TopicoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoTopicoForm form) {
-		Topico topico = form.atualizar(id, topicoRepository);
-		return ResponseEntity.ok(new TopicoDto(topico));
+		Optional<Topico> optional = topicoRepository.findById(id);
+		if (optional.isPresent()) {
+			Topico topico = form.atualizar(id, topicoRepository);
+			return ResponseEntity.ok(new TopicoDto(topico));
+		}
+		
+		return ResponseEntity.notFound().build();
 	}
 
+
 	// Metodo para excluir um registos
-    @DeleteMapping("/{id}")
+	@DeleteMapping("/{id}")
 	@Transactional
-    public ResponseEntity remover(@PathVariable Long id) {
-        topicoRepository.deleteById(id);
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body("Registro apagado com sucesso");
-    }
+	public ResponseEntity<?> remover(@PathVariable Long id) {
+		Optional<Topico> optional = topicoRepository.findById(id);
+		if (optional.isPresent()) {
+			topicoRepository.deleteById(id);
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body("Registro apagado com sucesso");
+		}
+		
+		return ResponseEntity.notFound().build();
+	}
 
 }
