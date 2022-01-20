@@ -3,6 +3,7 @@ package com.meuTutorial.forumDuvidas.controller;
 import java.net.URI;
 import java.util.List;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.meuTutorial.forumDuvidas.controller.dto.DetalhesDoTopicoDto;
 import com.meuTutorial.forumDuvidas.controller.dto.TopicoDto;
+import com.meuTutorial.forumDuvidas.controller.form.AtualizacaoTopicoForm;
 import com.meuTutorial.forumDuvidas.controller.form.TopicoForm;
 import com.meuTutorial.forumDuvidas.modelo.Topico;
 import com.meuTutorial.forumDuvidas.repository.CursoRepository;
@@ -60,6 +63,12 @@ public class TopicosController {
         return new DetalhesDoTopicoDto(topico);
     }
 	
-
+	// Metodo para atualizar dados
+	@PutMapping("/{id}")
+	@Transactional
+	public ResponseEntity<TopicoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoTopicoForm form) {
+		Topico topico = form.atualizar(id, topicoRepository);
+		return ResponseEntity.ok(new TopicoDto(topico));
+	}
 
 }
