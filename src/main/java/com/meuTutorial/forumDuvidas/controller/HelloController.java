@@ -11,7 +11,7 @@ public class HelloController {
     @RequestMapping("/")
     @ResponseBody
     public String hello() {
-        return "Hello world!";
+      return "Bem vindo ao serviço de back end de duvidas! Veja todas as duvidas em http://localhost:8080/topicos, e veja uma duvida em especifico usando http://localhost:8080/topicos/id.";
     }
 
 }
