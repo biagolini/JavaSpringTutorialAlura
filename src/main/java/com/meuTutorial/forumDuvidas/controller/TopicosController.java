@@ -1,13 +1,23 @@
 package com.meuTutorial.forumDuvidas.controller;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
+import com.meuTutorial.forumDuvidas.controller.dto.DetalhesDoTopicoDto;
+import com.meuTutorial.forumDuvidas.controller.dto.TopicoDto;
+import com.meuTutorial.forumDuvidas.controller.form.AtualizacaoTopicoForm;
+import com.meuTutorial.forumDuvidas.controller.form.TopicoForm;
+import com.meuTutorial.forumDuvidas.modelo.Topico;
+import com.meuTutorial.forumDuvidas.repository.CursoRepository;
+import com.meuTutorial.forumDuvidas.repository.TopicoRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,16 +27,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import com.meuTutorial.forumDuvidas.controller.dto.DetalhesDoTopicoDto;
-import com.meuTutorial.forumDuvidas.controller.dto.TopicoDto;
-import com.meuTutorial.forumDuvidas.controller.form.AtualizacaoTopicoForm;
-import com.meuTutorial.forumDuvidas.controller.form.TopicoForm;
-import com.meuTutorial.forumDuvidas.modelo.Topico;
-import com.meuTutorial.forumDuvidas.repository.CursoRepository;
-import com.meuTutorial.forumDuvidas.repository.TopicoRepository;
 
 @RestController
 @RequestMapping(value= "/topicos")
@@ -37,14 +40,17 @@ public class TopicosController {
 	@Autowired
 	private CursoRepository cursoRepository;
 	
-		// Lista de todos os topicos
+	// Lista de todos os topicos com paginação
 	@GetMapping
-	public List<TopicoDto> lista(String nomeCurso) {
+	public Page<TopicoDto> lista(@RequestParam(required = false) String nomeCurso, @RequestParam int pagina, @RequestParam int qtd) {
+		
+		Pageable paginacao = PageRequest.of(pagina, qtd);
+		
 		if (nomeCurso == null) {
-			List<Topico> topicos = topicoRepository.findAll();
+			Page<Topico> topicos = topicoRepository.findAll(paginacao);
 			return TopicoDto.converter(topicos);
 		} else {
-			List<Topico> topicos = topicoRepository.findByCursoNome(nomeCurso);
+			Page<Topico> topicos = topicoRepository.findByCursoNome(nomeCurso, paginacao);
 			return TopicoDto.converter(topicos);
 		}
 	}
