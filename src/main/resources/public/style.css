@@ -1,0 +1,35 @@
+/* ========== VARIABLES ========== */
+:root {
+  --text-color: rgb(90, 90, 90);
+  --link-color: rgb(200, 200, 200);
+}
+
+/* ========== BASE ========== */
+a {
+  text-decoration: none;
+  color: var(--link-color);
+}
+
+body {
+  font: 0 1rem "DM Sans", sans-serif;
+  font-size: 35px;
+  color: var(--text-color);
+  background: var(--body-color);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 {
+  font-size: 60px;
+  color: var(--title-color);
+  margin-bottom: 1rem;
+}
+
+p {
+  margin-bottom: 0rem;
+}
+
+/* ========== LAYOUT ========== */
+.section {
+  padding: 5rem 0;
+  text-align: center;
+}
