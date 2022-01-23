@@ -1,4 +1,4 @@
-package com.meuTutorial.forumDuvidas.config;
+package com.meuTutorial.forumDuvidas.config.validacao;
 
 
 import java.util.ArrayList;

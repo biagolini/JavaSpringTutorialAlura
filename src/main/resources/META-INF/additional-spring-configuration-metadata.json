@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "forum.jwt.secret",
+      "type": "java.lang.String",
+      "description": "Senha usada para gerar Tokens'forum.jwt.secret'"
+    },
+    {
+      "name": "forum.jwt.expiration",
+      "type": "java.lang.String",
+      "description": "Duração em milisegundos para validade de Tokens 'forum.jwt.expiration'"
+    }
+  ]
+}
