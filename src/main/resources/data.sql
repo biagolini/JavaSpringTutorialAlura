@@ -50,3 +50,12 @@ INSERT INTO TOPICO(titulo, mensagem, data_criacao, status, autor_id, curso_id) V
 INSERT INTO TOPICO(titulo, mensagem, data_criacao, status, autor_id, curso_id) VALUES('hashCode', 'Preciso de ajuda', '2022-01-20 10:01:00', 'NAO_RESPONDIDO', 20, 1);
 INSERT INTO TOPICO(titulo, mensagem, data_criacao, status, autor_id, curso_id) VALUES('enum StatusTopico', 'Preciso de ajuda', '2022-01-20 10:30:00', 'NAO_RESPONDIDO', 24, 1);
 INSERT INTO TOPICO(titulo, mensagem, data_criacao, status, autor_id, curso_id) VALUES('LocalDateTime', 'Preciso de ajuda', '2022-01-20 11:30:00', 'NAO_RESPONDIDO', 10, 1);
+
+INSERT INTO RESPOSTA(DATA_CRIACAO, MENSAGEM, SOLUCAO, AUTOR_ID, TOPICO_ID) VALUES('2022-01-20 11:30:00', 'Resposta 1', false,1,1);
+INSERT INTO RESPOSTA(DATA_CRIACAO, MENSAGEM, SOLUCAO, AUTOR_ID, TOPICO_ID) VALUES('2022-01-21 12:00:00', 'Resposta 2', false,2,1);
+INSERT INTO RESPOSTA(DATA_CRIACAO, MENSAGEM, SOLUCAO, AUTOR_ID, TOPICO_ID) VALUES('2022-01-22 12:30:00', 'Resposta 3', false,3,1);
+INSERT INTO RESPOSTA(DATA_CRIACAO, MENSAGEM, SOLUCAO, AUTOR_ID, TOPICO_ID) VALUES('2022-01-23 13:00:00', 'Resposta 4', false,4,1);
+INSERT INTO RESPOSTA(DATA_CRIACAO, MENSAGEM, SOLUCAO, AUTOR_ID, TOPICO_ID) VALUES('2022-01-24 13:30:00', 'Resposta 5', false,5,1);
+INSERT INTO RESPOSTA(DATA_CRIACAO, MENSAGEM, SOLUCAO, AUTOR_ID, TOPICO_ID) VALUES('2022-01-25 14:00:00', 'Resposta 6', false,6,1);
+
+
